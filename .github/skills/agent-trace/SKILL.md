@@ -23,7 +23,7 @@ Agent 必須在執行具體動作的同時，同步調用以下命令：
 在開始追蹤任務前，必須先初始化：
 
 ```bash
-python3 .github/copilot/skills/agent-trace/agent_trace.py init <run_name>
+python3 .github/skills/agent-trace/agent_trace.py init <run_name>
 ```
 
 **輸出：** 會建立 `runs/<timestamp>-<run_name>/` 目錄並回傳路徑
@@ -31,7 +31,7 @@ python3 .github/copilot/skills/agent-trace/agent_trace.py init <run_name>
 ### 2. 記錄事件 (log)
 
 ```bash
-python3 .github/copilot/skills/agent-trace/agent_trace.py log <run_dir> <type> "<message>" '<data_json>'
+python3 .github/skills/agent-trace/agent_trace.py log <run_dir> <type> "<message>" '<data_json>'
 ```
 
 **參數說明：**
@@ -43,13 +43,13 @@ python3 .github/copilot/skills/agent-trace/agent_trace.py log <run_dir> <type> "
 ### 3. 列出所有 runs (list)
 
 ```bash
-python3 .github/copilot/skills/agent-trace/agent_trace.py list
+python3 .github/skills/agent-trace/agent_trace.py list
 ```
 
 ### 4. 讀取 trace 內容 (read)
 
 ```bash
-python3 .github/copilot/skills/agent-trace/agent_trace.py read <run_dir>
+python3 .github/skills/agent-trace/agent_trace.py read <run_dir>
 ```
 
 ---
@@ -86,20 +86,20 @@ python3 .github/copilot/skills/agent-trace/agent_trace.py read <run_dir>
 
 ```bash
 # 1. 初始化
-python3 .github/copilot/skills/agent-trace/agent_trace.py init "feature-login"
+python3 .github/skills/agent-trace/agent_trace.py init "feature-login"
 # Output: runs/20260116-143000-feature_login
 
 # 2. 記錄計劃
-python3 .github/copilot/skills/agent-trace/agent_trace.py log runs/20260116-143000-feature_login plan "規劃登入功能開發" '{"steps": ["分析需求", "建立 API", "實作前端", "測試"]}'
+python3 .github/skills/agent-trace/agent_trace.py log runs/20260116-143000-feature_login plan "規劃登入功能開發" '{"steps": ["分析需求", "建立 API", "實作前端", "測試"]}'
 
 # 3. 記錄工具使用
-python3 .github/copilot/skills/agent-trace/agent_trace.py log runs/20260116-143000-feature_login tool_use "建立 login.py" '{"tool": "create_file", "args": {"path": "src/login.py"}}'
+python3 .github/skills/agent-trace/agent_trace.py log runs/20260116-143000-feature_login tool_use "建立 login.py" '{"tool": "create_file", "args": {"path": "src/login.py"}}'
 
 # 4. 記錄結果
-python3 .github/copilot/skills/agent-trace/agent_trace.py log runs/20260116-143000-feature_login tool_result "檔案建立成功" '{"success": true}'
+python3 .github/skills/agent-trace/agent_trace.py log runs/20260116-143000-feature_login tool_result "檔案建立成功" '{"success": true}'
 
 # 5. 記錄摘要
-python3 .github/copilot/skills/agent-trace/agent_trace.py log runs/20260116-143000-feature_login summary "登入功能開發完成" '{"result": "success", "files_created": 3}'
+python3 .github/skills/agent-trace/agent_trace.py log runs/20260116-143000-feature_login summary "登入功能開發完成" '{"result": "success", "files_created": 3}'
 ```
 
 ---

@@ -1,0 +1,66 @@
+{
+  "dataset_key": "default",
+  "path": "C:\\Users\\1806011\\Projects\\DataAnalysisAgent\\mock_data\\sales.csv",
+  "rows": 50,
+  "cols": 6,
+  "dtypes": {
+    "order_id": "object",
+    "store_id": "object",
+    "ts": "object",
+    "product_id": "object",
+    "quantity": "int64",
+    "sale_price": "float64"
+  },
+  "null_counts": {
+    "order_id": 0,
+    "store_id": 0,
+    "ts": 0,
+    "product_id": 0,
+    "quantity": 0,
+    "sale_price": 0
+  },
+  "sample_head": [
+    {
+      "order_id": "ORD-001",
+      "store_id": "ST-01",
+      "ts": "2026-01-01 09:15:30",
+      "product_id": "PRD-A101",
+      "quantity": 5,
+      "sale_price": 299.5
+    },
+    {
+      "order_id": "ORD-002",
+      "store_id": "ST-02",
+      "ts": "2026-01-01 10:22:45",
+      "product_id": "PRD-B203",
+      "quantity": 2,
+      "sale_price": 159.0
+    },
+    {
+      "order_id": "ORD-003",
+      "store_id": "ST-01",
+      "ts": "2026-01-01 11:05:12",
+      "product_id": "PRD-C305",
+      "quantity": 1,
+      "sale_price": 89.99
+    },
+    {
+      "order_id": "ORD-004",
+      "store_id": "ST-03",
+      "ts": "2026-01-01 13:40:55",
+      "product_id": "PRD-A101",
+      "quantity": 3,
+      "sale_price": 299.5
+    },
+    {
+      "order_id": "ORD-005",
+      "store_id": "ST-02",
+      "ts": "2026-01-01 14:18:22",
+      "product_id": "PRD-D407",
+      "quantity": 7,
+      "sale_price": 45.0
+    }
+  ],
+  "min_ts": "2026-01-01 09:15:30",
+  "max_ts": "2026-01-10 16:30:35"
+}

@@ -13,7 +13,7 @@ Copilot 會自動記錄每個動作到 `runs/<timestamp>-<run_name>/trace.ndjson
 
 
 # Repo. Prupose
-這是一個非常前瞻且具備工程實務意義的構想。你不是單純在記錄 Log，你是在進行 **「Agent 行為模式的逆向工程」**。
+本 Repo. 是在進行 **「Agent 行為模式的逆向工程」**。
 
 你的核心邏輯是：**利用 GitHub Copilot 作為一個靈活的「沙盒 (Sandbox)」來驗證數據分析的邏輯路徑，然後將這些經過驗證的「成功路徑」與「工具調用規律」，規格化地移植到 Databricks 企業級平台。**
 
