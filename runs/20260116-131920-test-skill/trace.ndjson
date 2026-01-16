@@ -1,0 +1,2 @@
+{"ts": "2026-01-16T13:19:20.150687", "type": "init", "message": "Run 'test-skill' initialized", "data": {"run_name": "test-skill"}}
+{"ts": "2026-01-16T13:19:28.206575", "type": "plan", "message": "測試計劃", "data": {"steps": ["step1", "step2"]}}

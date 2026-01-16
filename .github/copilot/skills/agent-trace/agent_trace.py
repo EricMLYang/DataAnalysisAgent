@@ -11,7 +11,18 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-RUNS_DIR = Path(__file__).parent / "runs"
+# 找到專案根目錄（向上尋找 .github 目錄的父層）
+def _find_project_root() -> Path:
+    """找到專案根目錄"""
+    current = Path(__file__).resolve()
+    while current != current.parent:
+        if (current / ".github").is_dir():
+            return current
+        current = current.parent
+    # 如果找不到，預設為腳本上四層目錄
+    return Path(__file__).resolve().parent.parent.parent.parent
+
+RUNS_DIR = _find_project_root() / "runs"
 
 # 支援的事件類型
 EVENT_TYPES = {
