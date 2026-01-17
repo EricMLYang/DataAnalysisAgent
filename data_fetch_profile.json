@@ -1,6 +1,6 @@
 {
   "dataset_key": "default",
-  "path": "C:\\Users\\1806011\\Projects\\DataAnalysisAgent\\mock_data\\sales.csv",
+  "path": "/Users/ericmlyang/Coding/DataAnalysisAgent/mock_data/sales.csv",
   "rows": 50,
   "cols": 6,
   "dtypes": {

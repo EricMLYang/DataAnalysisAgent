@@ -6,12 +6,33 @@
 runs/trace.ndjson → specs/*.yaml → flows/*.py → Databricks
 ```
 
-```bash
-# 轉換 trace → 生成程式碼 → 測試
-python3 .github/skills/trace-to-flow/scripts/trace_to_flow.py convert <run>
-python3 .github/skills/spec-to-langchain/scripts/generate.py generate <spec>
-python flows/<name>/run.py
+### 一鍵執行（推薦）
+
+在 Chat 中使用：
 ```
+/full-pipeline
+run_name: my-analysis
+任務：分析 sales.csv 的銷售趨勢
+```
+
+### 手動執行步驟
+
+```bash
+# 步驟 1: 轉換 trace → spec
+python3 .github/skills/trace-to-flow/scripts/trace_to_flow.py convert <run>
+
+# 步驟 2: 在 Chat 中生成程式碼（Agent 直接撰寫）
+/spec-to-langchain <spec_name>
+
+# 步驟 3: 測試執行
+python flows/<name>/run.py --task "..."
+```
+
+**為什麼需要 LangGraph 中間層？**
+- ✅ 本地驗證邏輯正確性
+- ✅ 識別可重用的 UC Functions
+- ✅ 定義狀態流轉結構
+- ✅ 提供 Databricks 移植藍圖
 
 ---
 
