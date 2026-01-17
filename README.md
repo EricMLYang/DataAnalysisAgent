@@ -1,4 +1,22 @@
+# Data Analysis Agent
+
+**Copilot 執行紀錄 → LangGraph 程式碼 → Databricks 部署**
+
+```
+runs/trace.ndjson → specs/*.yaml → flows/*.py → Databricks
+```
+
+```bash
+# 轉換 trace → 生成程式碼 → 測試
+python3 .github/skills/trace-to-flow/scripts/trace_to_flow.py convert <run>
+python3 .github/skills/spec-to-langchain/scripts/generate.py generate <spec>
+python flows/<name>/run.py
+```
+
+---
+
 # Agent Trace
+
 ## 事件類型
 `plan` `tool_search` `tool_use` `tool_result` `prompt_search` `step_prepare` `step_execute` `strategy_shift` `error` `summary`
 
@@ -11,8 +29,9 @@ run_name: my-task
 ```
 Copilot 會自動記錄每個動作到 `runs/<timestamp>-<run_name>/trace.ndjson`。
 
+---
 
-# Repo. Prupose
+# Repo Purpose
 本 Repo. 是在進行 **「Agent 行為模式的逆向工程」**。
 
 你的核心邏輯是：**利用 GitHub Copilot 作為一個靈活的「沙盒 (Sandbox)」來驗證數據分析的邏輯路徑，然後將這些經過驗證的「成功路徑」與「工具調用規律」，規格化地移植到 Databricks 企業級平台。**
