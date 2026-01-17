@@ -1,0 +1,56 @@
+run_name: fetch-data-test
+goal: 規劃數據撈取與檢查任務
+phases:
+- name: Understand
+  steps:
+  - 檢查現有數據文件
+  tools: []
+  outputs: []
+  dependencies: []
+  failure_modes: []
+  recovery_playbook: []
+- name: Fetch
+  steps:
+  - 讀取 data_fetch_profile.json 配置
+  tools: []
+  outputs: []
+  dependencies: []
+  failure_modes:
+  - error: ModuleNotFoundError
+    context: 嘗試載入 pandas 分析數據失敗
+  recovery_playbook:
+  - from: pandas 數據分析
+    to: 基於檔案的基本檢查
+    reason: pandas 未安裝，改用檔案大小與行數統計
+- name: Profile
+  steps:
+  - 載入並檢查 CSV 數據
+  tools: []
+  outputs: []
+  dependencies: []
+  failure_modes: []
+  recovery_playbook: []
+- name: QualityCheck
+  steps:
+  - 驗證數據完整性
+  tools: []
+  outputs: []
+  dependencies: []
+  failure_modes: []
+  recovery_playbook: []
+- name: Summarize
+  steps:
+  - 生成數據摘要報告
+  tools: []
+  outputs: []
+  dependencies: []
+  failure_modes: []
+  recovery_playbook: []
+final_summary:
+  result: success
+  dataset: ''
+  rows: 0
+  cols: 0
+  data_quality: ''
+  time_range: ''
+artifacts: []

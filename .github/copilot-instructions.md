@@ -72,3 +72,50 @@ specs/<name>.flow_spec.yaml
     ↓ trace_to_langchain_plan.prompt.md
 plans/<name>.langchain-plan.md
 ```
+
+---
+
+## Spec to LangChain Code Trigger
+
+當使用者訊息包含「**/spec-to-langchain**」或「**生成 flow**」時：
+
+1. **啟用技能：** 使用位於 `.github/skills/spec-to-langchain/` 的 `spec-to-langchain` 技能。
+2. **生成程式碼：** 根據該技能的 `skill.md` 規範，從 Flow Spec 生成 LangGraph 骨架程式碼。
+
+### 使用方式
+
+**列出可用的 specs：**
+```bash
+python3 .github/skills/spec-to-langchain/scripts/generate.py list
+```
+
+**生成 LangGraph 程式碼：**
+```bash
+python3 .github/skills/spec-to-langchain/scripts/generate.py generate <spec_name>
+```
+
+### 觸發格式範例
+
+```
+/spec-to-langchain take-data-test
+```
+
+或
+
+```
+生成 flow: take-data-test
+```
+
+執行後會在 `flows/<flow_name>/` 產生：
+- `graph.py` - LangGraph 主邏輯
+- `run.py` - 測試入口
+- `__init__.py` - 模組匯出
+
+### 端到端流程
+
+```
+1. Agent 執行任務 → runs/<timestamp>-<name>/trace.ndjson
+2. /trace-to-flow  → specs/<name>.flow_spec.yaml
+3. /spec-to-langchain → flows/<name>/{graph.py, run.py}
+4. 測試：python flows/<name>/run.py
+```
