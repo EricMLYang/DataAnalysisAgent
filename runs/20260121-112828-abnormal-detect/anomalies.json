@@ -1,0 +1,166 @@
+{
+  "generated_at": "2026-01-21T11:30:03.300771",
+  "summary": {
+    "total_anomalies": 12,
+    "severity_counts": {
+      "MEDIUM": 3,
+      "HIGH": 3,
+      "CRITICAL": 5,
+      "LOW": 1
+    },
+    "category_counts": {
+      "DATA_QUALITY": 4,
+      "LOGIC_ERROR": 3,
+      "OUTLIER": 3,
+      "BUSINESS_LOGIC": 2
+    }
+  },
+  "statistics": {
+    "sales": {
+      "total_records": 50,
+      "missing_quantity": 1,
+      "missing_price": 1,
+      "negative_quantity": 1,
+      "negative_price": 1,
+      "date_range": "2026-01-01 09:15:30 ~ 2026-01-10 16:30:35",
+      "total_revenue": 107161.35000000002,
+      "avg_price": 2232.5281250000003,
+      "unique_products": 7,
+      "unique_stores": 3
+    },
+    "inventory": {
+      "total_records": 30,
+      "missing_onhand": 1,
+      "missing_reserved": 1,
+      "negative_onhand": 1,
+      "negative_reserved": 0,
+      "logic_errors": 2,
+      "total_onhand": 1406.0,
+      "total_reserved": 410.0,
+      "unique_products": 7,
+      "unique_stores": 3
+    }
+  },
+  "anomalies": [
+    {
+      "category": "DATA_QUALITY",
+      "severity": "MEDIUM",
+      "table": "sales",
+      "column": "quantity",
+      "record_id": "ORD-018",
+      "issue": "Missing quantity value",
+      "value": "NULL",
+      "expected": "NOT NULL"
+    },
+    {
+      "category": "DATA_QUALITY",
+      "severity": "MEDIUM",
+      "table": "sales",
+      "column": "sale_price",
+      "record_id": "ORD-020",
+      "issue": "Missing price value",
+      "value": "NULL",
+      "expected": "> 0"
+    },
+    {
+      "category": "LOGIC_ERROR",
+      "severity": "HIGH",
+      "table": "sales",
+      "column": "quantity",
+      "record_id": "ORD-030",
+      "issue": "Negative quantity",
+      "value": "-5.0",
+      "expected": ">= 0"
+    },
+    {
+      "category": "LOGIC_ERROR",
+      "severity": "CRITICAL",
+      "table": "sales",
+      "column": "sale_price",
+      "record_id": "ORD-032",
+      "issue": "Negative price - data corruption",
+      "value": "-999.99",
+      "expected": "> 0"
+    },
+    {
+      "category": "OUTLIER",
+      "severity": "CRITICAL",
+      "table": "sales",
+      "column": "quantity",
+      "record_id": "ORD-004",
+      "issue": "Extreme quantity outlier",
+      "value": "9999.0",
+      "expected": "[-7.0, 14.0]"
+    },
+    {
+      "category": "OUTLIER",
+      "severity": "CRITICAL",
+      "table": "sales",
+      "column": "quantity",
+      "record_id": "ORD-046",
+      "issue": "Extreme quantity outlier",
+      "value": "8888.0",
+      "expected": "[-7.0, 14.0]"
+    },
+    {
+      "category": "OUTLIER",
+      "severity": "CRITICAL",
+      "table": "sales",
+      "column": "sale_price",
+      "record_id": "ORD-047",
+      "issue": "Extreme price outlier",
+      "value": "99999.99",
+      "expected": "[-254.5, 540.9]"
+    },
+    {
+      "category": "DATA_QUALITY",
+      "severity": "MEDIUM",
+      "table": "inventory",
+      "column": "on_hand",
+      "record_id": "ST-03|PRD-D407",
+      "issue": "Missing on_hand inventory",
+      "value": "NULL",
+      "expected": "NOT NULL"
+    },
+    {
+      "category": "DATA_QUALITY",
+      "severity": "LOW",
+      "table": "inventory",
+      "column": "reserved",
+      "record_id": "ST-03|PRD-E509",
+      "issue": "Missing reserved inventory",
+      "value": "NULL",
+      "expected": ">= 0"
+    },
+    {
+      "category": "LOGIC_ERROR",
+      "severity": "CRITICAL",
+      "table": "inventory",
+      "column": "on_hand",
+      "record_id": "ST-02|PRD-E509",
+      "issue": "Negative inventory - critical issue",
+      "value": "-20.0",
+      "expected": ">= 0"
+    },
+    {
+      "category": "BUSINESS_LOGIC",
+      "severity": "HIGH",
+      "table": "inventory",
+      "column": "reserved",
+      "record_id": "ST-01|PRD-E509",
+      "issue": "Reserved exceeds available stock",
+      "value": "reserved=50.0, on_hand=15.0",
+      "expected": "reserved <= on_hand"
+    },
+    {
+      "category": "BUSINESS_LOGIC",
+      "severity": "HIGH",
+      "table": "inventory",
+      "column": "reserved",
+      "record_id": "ST-02|PRD-E509",
+      "issue": "Reserved exceeds available stock",
+      "value": "reserved=8.0, on_hand=-20.0",
+      "expected": "reserved <= on_hand"
+    }
+  ]
+}

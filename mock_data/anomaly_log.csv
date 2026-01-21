@@ -1,0 +1,12 @@
+detected_at,table_name,column_name,anomaly_type,severity,record_id,anomalous_value,expected_range,suggested_action
+2026-01-15 10:30:00,sales,quantity,OUTLIER,HIGH,ORD-004,9999,"[1, 10]",Verify if bulk order is legitimate
+2026-01-15 10:30:15,sales,quantity,MISSING_VALUE,MEDIUM,ORD-018,NULL,NOT NULL,Require data entry from source system
+2026-01-15 10:30:30,sales,sale_price,MISSING_VALUE,MEDIUM,ORD-020,NULL,"> 0",Require pricing confirmation
+2026-01-15 10:31:00,sales,quantity,LOGIC_ERROR,HIGH,ORD-030,-5,">= 0",Investigate data pipeline error
+2026-01-15 10:31:15,sales,sale_price,LOGIC_ERROR,CRITICAL,ORD-032,-999.99,"> 0",Critical: Check for data corruption
+2026-01-15 10:31:45,sales,quantity,OUTLIER,HIGH,ORD-046,8888,"[1, 10]",Verify bulk order authenticity
+2026-01-15 10:32:00,sales,sale_price,OUTLIER,CRITICAL,ORD-047,99999.99,"[10, 500]",Critical pricing anomaly detected
+2026-01-15 10:35:00,inventory,reserved,LOGIC_ERROR,HIGH,ST-01|PRD-E509,50 > 15,"reserved <= on_hand",Reserved exceeds available stock
+2026-01-15 10:35:30,inventory,on_hand,LOGIC_ERROR,CRITICAL,ST-02|PRD-E509,-20,">= 0",Negative inventory - immediate investigation required
+2026-01-15 10:36:00,inventory,on_hand,MISSING_VALUE,MEDIUM,ST-03|PRD-D407,NULL,NOT NULL,Missing inventory count
+2026-01-15 10:36:15,inventory,reserved,MISSING_VALUE,LOW,ST-03|PRD-E509,NULL,">= 0",Missing reservation data
