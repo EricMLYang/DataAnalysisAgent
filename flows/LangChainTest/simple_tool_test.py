@@ -1,10 +1,18 @@
-"""最簡單的 LangChain 工具選擇範例"""
+"""最簡單的 LangChain 工具選擇範例 - 整合 Skill Loader"""
+import sys
+from pathlib import Path
+
+# 加入專案根目錄到 Python path
+root_dir = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(root_dir))
+
 from langchain_core.tools import tool
 from langchain_openai import AzureChatOpenAI
 import yaml
+from skill_loader import load_skills_simple
 
 # 載入設定
-with open("config/secret.yml") as f:
+with open(root_dir / "config" / "secret.yml") as f:
     config = yaml.safe_load(f)
 
 # 定義簡單工具
@@ -36,17 +44,33 @@ llm = AzureChatOpenAI(
     temperature=0
 )
 
-# 綁定工具
-tools = [calculator, get_weather, search_web]
-llm_with_tools = llm.bind_tools(tools)
+print("\n🔄 載入技能中...")
+print("-" * 60)
 
-print("=" * 60)
-print("🤖 LangChain 工具選擇測試 - 互動模式")
+# 載入手動定義的工具
+manual_tools = [calculator, get_weather, search_web]
+
+# 自動載入 skills（目前只載入 data-fetch）
+skill_tools = load_skills_simple(['data-fetch'])
+
+# 合併所有工具
+all_tools = manual_tools + skill_tools
+
+print(f"✅ 總共載入 {len(all_tools)} 個工具")
+print("-" * 60)
+
+# 綁定工具
+llm_with_tools = llm.bind_tools(all_tools)
+
+print("\n" + "=" * 60)
+print("🤖 LangChain 工具選擇測試 - 互動模式（含 Skills）")
 print("=" * 60)
 print("可用工具:")
 print("  📊 calculator - 計算數學表達式")
 print("  🌤️  get_weather - 查詢城市天氣")
 print("  🔍 search_web - 網路搜尋")
+for tool in skill_tools:
+    print(f"  🔧 {tool.name} - {tool.description[:50]}...")
 print("\n輸入 'exit' 或 'quit' 結束程式\n")
 
 # 互動迴圈
