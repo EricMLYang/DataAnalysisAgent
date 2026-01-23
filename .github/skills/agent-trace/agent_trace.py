@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 """
 Agent Trace - 極簡 AI Agent 動作記錄工具
-支援事件類型：plan, tool_search, tool_use, tool_result, prompt_search, 
-              step_prepare, step_execute, strategy_shift, error, summary
+支援事件類型：
+  意圖理解: context_search, intent_clarify
+  計畫: plan
+  發現資源: prompt_search, tool_search, step_prepare
+  執行: step_execute, tool_use, tool_result
+  觀察檢視: observation, error
+  驗證反思: validation, reflection, strategy_shift
+  總結提交: summary, delivery
 """
 
 import json
@@ -26,16 +32,29 @@ RUNS_DIR = _find_project_root() / "runs"
 
 # 支援的事件類型
 EVENT_TYPES = {
-    "plan",           # 計劃（列 3-8 步）
-    "tool_search",    # 尋找工具/指令
-    "tool_use",       # 使用工具
-    "tool_result",    # 工具結果
-    "prompt_search",  # 查詢 prompt/instruction
-    "step_prepare",   # 準備執行步驟
-    "step_execute",   # 執行步驟
-    "strategy_shift", # 改變策略
-    "error",          # 錯誤
-    "summary",        # 任務摘要
+    # 意圖理解
+    "context_search",  # 搜尋相關 Context
+    "intent_clarify",  # 釐清意圖
+    # 計畫
+    "plan",            # 任務計劃（列 3-8 步）
+    # 發現資源
+    "prompt_search",   # 查詢 prompt/instruction
+    "tool_search",     # 尋找工具/指令
+    "step_prepare",    # 準備執行步驟
+    # 執行
+    "step_execute",    # 執行步驟
+    "tool_use",        # 使用工具
+    "tool_result",     # 工具結果
+    # 觀察檢視
+    "observation",     # 觀察結果
+    "error",           # 錯誤記錄
+    # 驗證反思
+    "validation",      # 驗證結果
+    "reflection",      # 反思與評估
+    "strategy_shift",  # 改變策略
+    # 總結提交
+    "summary",         # 任務摘要
+    "delivery",        # 交付成果
 }
 
 
@@ -100,16 +119,29 @@ def _get_icon(event_type: str) -> str:
     """取得事件類型對應的圖示"""
     icons = {
         "init": "🚀",
+        # 意圖理解
+        "context_search": "🔎",
+        "intent_clarify": "💡",
+        # 計畫
         "plan": "📋",
+        # 發現資源
+        "prompt_search": "📖",
         "tool_search": "🔍",
+        "step_prepare": "📝",
+        # 執行
+        "step_execute": "▶️",
         "tool_use": "🔧",
         "tool_result": "📤",
-        "prompt_search": "📖",
-        "step_prepare": "📝",
-        "step_execute": "▶️",
-        "strategy_shift": "🔄",
+        # 觀察檢視
+        "observation": "👁️",
         "error": "❌",
+        # 驗證反思
+        "validation": "✔️",
+        "reflection": "🤔",
+        "strategy_shift": "🔄",
+        # 總結提交
         "summary": "✅",
+        "delivery": "📦",
     }
     return icons.get(event_type, "•")
 

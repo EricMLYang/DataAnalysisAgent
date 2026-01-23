@@ -58,18 +58,90 @@ python3 .github/skills/agent-trace/agent_trace.py read <run_dir>
 
 ### Event Types
 
-| type | 說明 | 使用時機 | data 建議欄位 |
-|------|------|----------|---------------|
-| `plan` | 任務計劃 | 列出 3-8 個步驟 | `{"steps": ["step1", "step2", ...]}` |
-| `tool_search` | 尋找工具 | 查找適合的工具或指令 | `{"query": "...", "found": [...]}` |
-| `tool_use` | 使用工具 | 執行命令、編輯檔案、呼叫 function | `{"tool": "...", "args": {...}}` |
-| `tool_result` | 工具結果 | 記錄工具回傳 | `{"success": true/false, "output": "..."}` |
-| `prompt_search` | 查詢 prompt | 查詢 prompt 或 instruction | `{"query": "...", "source": "..."}` |
-| `step_prepare` | 準備步驟 | 準備執行某步驟前 | `{"step": 1, "description": "..."}` |
-| `step_execute` | 執行步驟 | 開始/完成執行步驟 | `{"step": 1, "status": "start/done"}` |
-| `strategy_shift` | 策略改變 | 方法行不通需調整 | `{"from": "...", "to": "...", "reason": "..."}` |
-| `error` | 錯誤 | 發生錯誤時 | `{"error": "...", "context": "..."}` |
-| `summary` | 任務摘要 | 任務結束時 | `{"result": "success/failed", "notes": "..."}` |
+#### 1. 意圖理解 (Intent Understanding)
+剛接收到問題，應該會有一段撈取 Context 去釐清問題的動作
+
+- **`context_search`** - 搜尋相關 Context
+  - **使用時機**: 收到問題後，搜尋相關檔案、文件、歷史記錄
+  - **data 欄位**: `{"query": "...", "sources": [...], "findings": "..."}`
+
+- **`intent_clarify`** - 釐清意圖
+  - **使用時機**: 分析問題、確認需求、理解目標
+  - **data 欄位**: `{"question": "...", "understanding": "...", "assumptions": [...]}`
+
+#### 2. 計畫 (Planning)
+把問題變成步驟
+
+- **`plan`** - 任務計劃
+  - **使用時機**: 列出 3-8 個執行步驟
+  - **data 欄位**: `{"steps": ["step1", "step2", ...], "rationale": "..."}`
+
+#### 3. 發現資源 (Resource Discovery)
+包含 prompt、工具、技能等資源
+
+- **`prompt_search`** - 查詢 prompt
+  - **使用時機**: 查詢 prompt 或 instruction
+  - **data 欄位**: `{"query": "...", "source": "...", "result": "..."}`
+
+- **`tool_search`** - 尋找工具
+  - **使用時機**: 查找適合的工具、指令或技能
+  - **data 欄位**: `{"query": "...", "found": [...], "selected": "..."}`
+
+- **`step_prepare`** - 準備步驟
+  - **使用時機**: 準備執行某步驟前，收集所需資源
+  - **data 欄位**: `{"step": 1, "description": "...", "resources": [...]}`
+
+#### 4. 執行 (Execution)
+執行發現的資源
+
+- **`step_execute`** - 執行步驟
+  - **使用時機**: 開始/完成執行步驟
+  - **data 欄位**: `{"step": 1, "status": "start/done", "action": "..."}`
+
+- **`tool_use`** - 使用工具
+  - **使用時機**: 執行命令、編輯檔案、呼叫 function
+  - **data 欄位**: `{"tool": "...", "args": {...}, "purpose": "..."}`
+
+- **`tool_result`** - 工具結果
+  - **使用時機**: 記錄工具回傳結果
+  - **data 欄位**: `{"success": true/false, "output": "...", "error": "..."}`
+
+#### 5. 觀察檢視 (Observation)
+針對結果作評論
+
+- **`observation`** - 觀察結果
+  - **使用時機**: 檢視執行結果、分析輸出、發現問題
+  - **data 欄位**: `{"observation": "...", "findings": [...], "concerns": [...]}`
+
+- **`error`** - 錯誤記錄
+  - **使用時機**: 發生錯誤時
+  - **data 欄位**: `{"error": "...", "context": "...", "severity": "..."}`
+
+#### 6. 驗證反思 (Validation & Reflection)
+針對目前狀態決定要不要有其他計畫循環
+
+- **`validation`** - 驗證結果
+  - **使用時機**: 檢查結果是否符合預期、驗證輸出正確性
+  - **data 欄位**: `{"status": "pass/fail", "checks": [...], "issues": [...]}`
+
+- **`reflection`** - 反思與評估
+  - **使用時機**: 評估當前進度、判斷是否需要調整
+  - **data 欄位**: `{"current_state": "...", "next_action": "...", "confidence": 0.0-1.0}`
+
+- **`strategy_shift`** - 策略改變
+  - **使用時機**: 方法行不通需調整策略
+  - **data 欄位**: `{"from": "...", "to": "...", "reason": "..."}`
+
+#### 7. 總結與提交 (Summary & Delivery)
+交出最終結果
+
+- **`summary`** - 任務摘要
+  - **使用時機**: 任務結束時，總結執行結果
+  - **data 欄位**: `{"result": "success/failed", "notes": "...", "deliverables": [...]}`
+
+- **`delivery`** - 交付成果
+  - **使用時機**: 提交最終結果給使用者
+  - **data 欄位**: `{"output": "...", "files": [...], "next_steps": [...]}`
 
 ---
 
